@@ -32,12 +32,15 @@ final class HomeController extends AbstractController
     }
 
     #[Route('/add/subject/student', name: 'app_add_subject')]
-    public function addSubjectToStudent(EntityManagerInterface $entityManager, Request $request,): response
+    public function addSubjectToStudent(EntityManagerInterface $entityManager, Request $request): response
     {
         $form = $this->createForm(AddSubjectFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $subject = $form->getData();
+            $user = $form->get('user')->getData();
+            $subject->get('subject')->getData();
+            $subject->addUserSubject($user);
             $entityManager->persist($subject);
             $entityManager->flush();
 

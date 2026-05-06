@@ -22,7 +22,7 @@ class AddSubjectFormType extends AbstractType
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
                     return $er->createQueryBuilder('u')
                         ->where('u.roles LIKE :role')
-                        ->setParameter('role', '%ROLE_TEACHER%')
+                        ->setParameter('role', '%ROLE_USER%')
                         ->orderBy('u.firstName', 'ASC');
                 },
                 'choice_label' => 'firstName',
@@ -30,7 +30,8 @@ class AddSubjectFormType extends AbstractType
             ])
             ->add('subject', EntityType::class, [
                 'class'=> Subjects::class,
-                'choice_label'=> 'name'
+                'choice_label'=> 'name',
+                'placeholder' => 'Selecteer een subject',
             ])
             ->add('submit', SubmitType::class)
         ;
@@ -39,7 +40,7 @@ class AddSubjectFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+           'data_class' => null,
         ]);
     }
 }
